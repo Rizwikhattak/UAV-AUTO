@@ -15,6 +15,7 @@ class MissionStationMappingController():
                 "departure_station_id": mission_station_mapping.departure_station_id
                 }
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -31,6 +32,7 @@ class MissionStationMappingController():
             else:
                 return []
         except Exception as e:
+            print(e)
             return []
 
     @staticmethod
@@ -47,6 +49,7 @@ class MissionStationMappingController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -67,6 +70,7 @@ class MissionStationMappingController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -85,5 +89,6 @@ class MissionStationMappingController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
             

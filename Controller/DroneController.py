@@ -34,6 +34,7 @@ class DroneController():
             "image_path": drone.image_path,
             }
         except Exception as e:
+            print(e)
             return {}
 
     #Helper Function
@@ -78,6 +79,7 @@ class DroneController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -105,6 +107,7 @@ class DroneController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
     @staticmethod
     def get_all_drones():
@@ -115,6 +118,7 @@ class DroneController():
             else:
                 return []
         except Exception as e:
+            print(e)
             return []
 
     @staticmethod
@@ -126,4 +130,5 @@ class DroneController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}

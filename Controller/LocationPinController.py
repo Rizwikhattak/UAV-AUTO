@@ -10,6 +10,7 @@ class LocationPinController():
             db.session.commit()
             return {'id':location_pin.id,'route_id':location_pin.route_id,'latitude':location_pin.latitude,'longitude':location_pin.longitude}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -21,6 +22,7 @@ class LocationPinController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -32,6 +34,7 @@ class LocationPinController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -46,6 +49,7 @@ class LocationPinController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -59,4 +63,5 @@ class LocationPinController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}

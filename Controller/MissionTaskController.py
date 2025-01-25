@@ -18,6 +18,7 @@ class MissionTaskController():
                 "description":mission_task.description
             }
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod

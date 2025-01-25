@@ -14,6 +14,7 @@ class MissionDataLocationController():
                     'longitude':mission_data_location.longitude,
                     'damage':mission_data_location.damage}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -29,6 +30,7 @@ class MissionDataLocationController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -44,6 +46,7 @@ class MissionDataLocationController():
             else:
                 return []
         except Exception as e:
+            print(e)
             return []
 
     @staticmethod
@@ -64,6 +67,7 @@ class MissionDataLocationController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -81,5 +85,6 @@ class MissionDataLocationController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 

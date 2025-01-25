@@ -18,6 +18,7 @@ class DroneAvailabilityLogController():
                 "end_time_limit": str(drone_availability_log.end_time_limit)
             }
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -37,6 +38,7 @@ class DroneAvailabilityLogController():
             else:
                 return []
         except Exception as e:
+            print(e)
             return []
 
     @staticmethod
@@ -56,6 +58,7 @@ class DroneAvailabilityLogController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -81,6 +84,7 @@ class DroneAvailabilityLogController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -102,4 +106,5 @@ class DroneAvailabilityLogController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}

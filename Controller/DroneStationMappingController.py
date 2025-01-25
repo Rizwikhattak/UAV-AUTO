@@ -15,6 +15,7 @@ class DroneStationMappingController():
                 "status":drone_station_mapping.status
             }
         except Exception as e:
+            print(e)
             return {}
 
 
@@ -34,6 +35,7 @@ class DroneStationMappingController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -45,6 +47,7 @@ class DroneStationMappingController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -56,6 +59,7 @@ class DroneStationMappingController():
             else:
                 return []
         except Exception as e:
+            print(e)
             return []
     @staticmethod
     def delete_drone_station_mapping(drone_id):
@@ -67,4 +71,5 @@ class DroneStationMappingController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}

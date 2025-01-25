@@ -12,6 +12,7 @@ class MissionDataImageController():
                     'mission_data_location_id':mission_data_image.mission_data_location_id,
                     'image_path':mission_data_image.image_path}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -28,6 +29,7 @@ class MissionDataImageController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -41,6 +43,7 @@ class MissionDataImageController():
             else:
                 return []
         except Exception as e:
+            print(e)
             return []
 
     @staticmethod
@@ -54,6 +57,7 @@ class MissionDataImageController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
     @staticmethod
@@ -69,6 +73,7 @@ class MissionDataImageController():
             else:
                 return {}
         except Exception as e:
+            print(e)
             return {}
 
 
