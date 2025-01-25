@@ -2,7 +2,7 @@ from config import db
 from Model import MissionVideo
 import os
 from Directories import make_mission_dirs
-from ProcessImage import extract_frames
+from ProcessVideos import extract_frames
 class MissionVideoController():
     @staticmethod
     def insert_video(data,mission_video):
