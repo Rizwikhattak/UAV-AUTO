@@ -19,5 +19,7 @@ class MissionPlanner(db.Model):
     drone = db.relationship('Drone',back_populates = 'missionPlanner')
     missionTask = db.relationship('MissionTask',back_populates = 'missionPlanner')
     sortie = db.relationship('Sortie',back_populates = 'missionPlanner')
+    droneAvailabilityLog = db.relationship('DroneAvailabilityLog',back_populates='missionPlanner')
+
 
 

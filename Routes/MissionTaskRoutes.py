@@ -7,9 +7,41 @@ mission_task_routes = Blueprint('mission_task_routes',__name__)
 def insert_mission_task():
     data = request.get_json()
     mission_task = MissionTaskController.insert_mission_task(data)
-    mission_task_dict = {
-        "id":mission_task.id,
-        "mission_planner_id":mission_task.mission_planner_id,
-        "description":mission_task.description
-    }
-    return {'success':True,'data':mission_task_dict},200
+    if mission_task:
+        return {'success':True,'data':mission_task},200
+    else:
+        return {'success':False,'data':mission_task},400
+
+@mission_task_routes.route('/get_all_mission_tasks',methods=['GET'])
+def get_all_mission_tasks():
+    mission_tasks = MissionTaskController.get_all_mission_tasks()
+    if mission_tasks:
+        return {'success':True,'data':mission_tasks},200
+    else:
+        return {'success':False,'data':mission_tasks},400
+
+@mission_task_routes.route('/get_mission_task_by_id/<int:id>',methods=['GET'])
+def get_mission_task_by_id(id):
+    mission_task = MissionTaskController.get_mission_task_by_id(id)
+    if mission_task:
+        return {'success':True,'data':mission_task},200
+    else:
+        return {'success':False,'data':mission_task},400
+
+@mission_task_routes.route('/update_mission_task/<int:id>',methods=['PUT'])
+def update_mission_task(id):
+    data = request.get_json()
+    data['id'] = id
+    mission_task = MissionTaskController.update_mission_task(data)
+    if mission_task:
+        return {'success':True,'data':mission_task},200
+    else:
+        return {'success':False,'data':mission_task},400
+
+@mission_task_routes.route('/delete_mission_task/<int:id>',methods=['DELETE'])
+def delete_mission_task(id):
+    mission_task = MissionTaskController.delete_mission_task(id)
+    if mission_task:
+        return {'success':True,'data':mission_task},200
+    else:
+        return {'success':False,'data':mission_task},400

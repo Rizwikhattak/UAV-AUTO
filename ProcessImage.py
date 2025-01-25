@@ -2,6 +2,8 @@ from ultralytics import YOLO
 import cv2
 import numpy as np
 import os
+
+from Controller import MissionDataLocationController, MissionDataImageController
 from config import app
 import random
 import math
@@ -78,35 +80,22 @@ def extract_frames(data, output_folder, frames_per_second=5):
 
                 if chk:
                     # Save to the database
-                    mission_data_location = MissionDataLocation(
-                        mission_video_id=data['mission_video_id'],
-                        latitude=damage_lat,
-                        longitude=damage_lon,
-                        damage=class_label
-                    )
+                    mission_data_location = MissionDataLocationController.insert_mission_data_location({'mission_video_id':data['mission_video_id'],'latitude':damage_lat,'longitude':damage_lon,'damage':class_label})
                     chk = False
-                    db.session.add(mission_data_location)
-                    db.session.commit()
-                    temp['mission_data_location_id'] = mission_data_location.id
-                    temp['latitude'] = mission_data_location.latitude
-                    temp['longitude'] = mission_data_location.longitude
-                    temp['damage'] = mission_data_location.damage
+                    temp['mission_data_location_id'] = mission_data_location.get('id')
+                    temp['latitude'] = mission_data_location.get('latitude')
+                    temp['longitude'] = mission_data_location.get('longitude')
+                    temp['damage'] = mission_data_location.get('damage')
                     temp['image_paths'] = []
-
                 # Save damaged frame
                 damaged_frame_file_path = os.path.join(
-                    output_folder, f"{mission_data_location.id}_{class_label}_{confidence_score:.2f}.png"
+                    output_folder, f"{mission_data_location.get('id')}_{class_label}_{confidence_score:.2f}.png"
                 )
                 cv2.imwrite(damaged_frame_file_path, plotted_image)
                 damaged_frame_file_path = damaged_frame_file_path.replace("\\","/")
                 # Save damaged image record
-                mission_data_image = MissionDataImage(
-                    mission_data_location_id=mission_data_location.id,
-                    image_path=damaged_frame_file_path
-                )
-                db.session.add(mission_data_image)
-                db.session.commit()
-                temp['image_paths'].append(mission_data_image.image_path)
+                mission_data_image = MissionDataImageController.insert_mission_data_image({'mission_data_location_id':mission_data_location.get('id'),'image_path':damaged_frame_file_path})
+                temp['image_paths'].append(mission_data_image.get('image_path'))
             saved_frame_count += 1
         if temp:
             all_mission_data_locations_data.append(temp)

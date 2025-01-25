@@ -9,32 +9,45 @@ def insert_drone():
     data = request.form.to_dict()
     drone_img = request.files.get('image')
     drone = DroneController.insert_drone(data,drone_img)
-    return jsonify({'success':True,'data':drone})
+    if drone:
+        return jsonify({'success':True,'data':drone}),200
+    else:
+        return jsonify({'success':False,'data':drone}),400
 
-@drone_routes.route('/update_drone', methods=['PUT'])
-def update_drone():
+@drone_routes.route('/update_drone/<int:id>', methods=['PUT'])
+def update_drone(id):
     data = request.form.to_dict()
+    data['id'] = id
     drone_img = request.files.get('image')
     drone = DroneController.update_drone(data,drone_img)
-    return jsonify({'success':True,'data':drone})
+    if drone:
+        return jsonify({'success':True,'data':drone}),200
+    else:
+        return jsonify({'success':False,'data':drone}),400
 
 @drone_routes.route('/get_all_drones',methods=['GET'])
 def get_all_drones():
     drones = DroneController.get_all_drones()
     if drones:
-        return jsonify({'success':True,'data':drones})
-    return jsonify({'success':False,'data':drones})
+        return jsonify({'success':True,'data':drones}),200
+    else:
+        return jsonify({'success':False,'data':drones}),400
 
-@drone_routes.route('/get_drone/<int:id>',methods=['GET'])
-def get_drone(id):
+@drone_routes.route('/get_drone_by_id/<int:id>',methods=['GET'])
+def get_drone_by_id(id):
     drone = DroneController.get_drone_by_id(id)
     if drone:
-        return jsonify({'success':True,'data':drone})
-    return jsonify({'success': False, 'data': drone})
+        return jsonify({'success':True,'data':drone}),200
+    else:
+        return jsonify({'success': False, 'data': drone}),400
+
 @drone_routes.route('/delete_drone/<int:id>',methods=['DELETE'])
 def delete_drone(id):
-    is_deleted = DroneController.delete_drone(id)
-    return jsonify({'success':is_deleted})
+    drone = DroneController.delete_drone(id)
+    if drone:
+        return jsonify({'success':True,'data':drone}),200
+    else:
+        return jsonify({'success': False, 'data': drone}),400
 
 @drone_routes.route('/uploads/drones/profile_pictures/<filename>')
 def serve_profile_picture(filename):

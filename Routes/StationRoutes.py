@@ -7,29 +7,41 @@ station_routes = Blueprint('station_routes',__name__)
 def insert_station():
     data = request.get_json()
     station = StationController.insert_station(data)
-    return jsonify({'success':True,'data':station}),200
+    if station:
+        return jsonify({'success':True,'data':station}),200
+    else:
+        return jsonify({'success':False,'data':station}),400
 
 @station_routes.route('/get_all_stations',methods=['GET'])
 def get_all_stations():
     stations = StationController.get_all_stations()
     if stations:
-        return jsonify({'success':True,'data':stations})
-    return jsonify({'success':False,'data':stations})
+        return jsonify({'success':True,'data':stations}),200
+    else:
+        return jsonify({'success':False,'data':stations}),400
 
 @station_routes.route('/get_station_by_id/<int:id>',methods=['GET'])
 def get_station_by_id(id):
     station = StationController.get_station_by_id(id)
     if station:
-        return jsonify({'success':True,'data':station})
-    return jsonify({'success':False,'data':station})
+        return jsonify({'success':True,'data':station}),200
+    else:
+        return jsonify({'success':False,'data':station}),400
 
-@station_routes.route('/update_station',methods=['PUT'])
+@station_routes.route('/update_station_by_id/<int:id>',methods=['PUT'])
 def update_station():
     data = request.get_json()
-    station = StationController.update_station(data)
-    return jsonify({'success':True,'data':station})
+    data['id'] = id
+    station = StationController.update_station_by_id(data)
+    if station:
+        return jsonify({'success':True,'data':station}),200
+    else:
+        return jsonify({'success':False,'data':station}),400
 
-@station_routes.route('/delete_station/<int:id>',methods=['DELETE'])
+@station_routes.route('/delete_station_by_id/<int:id>',methods=['DELETE'])
 def delete_station(id):
-    is_deleted = StationController.delete_station(id)
-    return jsonify({'success':is_deleted})
+    station = StationController.delete_station_by_id(id)
+    if station:
+        return jsonify({'success':True,'data':station}),200
+    else:
+        return jsonify({'success':False,'data':station}),400

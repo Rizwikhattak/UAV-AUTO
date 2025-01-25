@@ -7,15 +7,41 @@ drone_station_mapping_routes = Blueprint('drone_station_mapping_routes',__name__
 def insert_drone_station_mapping():
     data = request.get_json()
     drone_station_mapping = DroneStationMappingController.insert_drone_sation_mapping(data)
-    drone_station_mapping_dict = {
-        "id":drone_station_mapping.id,
-        "drone_id":drone_station_mapping.drone_id,
-        "station_id":drone_station_mapping.station_id,
-        "status":drone_station_mapping.status
-    }
-    return jsonify({'success':True,'data':drone_station_mapping_dict}),200
+    if drone_station_mapping:
+        return jsonify({'success':True,'data':drone_station_mapping}),200
+    else:
+        return jsonify({'success':False,'data':drone_station_mapping}),400
 
 @drone_station_mapping_routes.route('/get_all_drone_station_mapping',methods=['GET'])
 def get_all_drone_station_mapping():
     drone_station_mappings = DroneStationMappingController.get_all_drone_station_mapping()
-    return {'success':True,'data':drone_station_mappings}
+    if drone_station_mappings:
+        return jsonify({'success':True,'data':drone_station_mappings}),200
+    else:
+        return jsonify({'success':False,'data':drone_station_mappings}),400
+
+@drone_station_mapping_routes.route('/get_drone_station_mapping_by_drone_id/<int:id>',methods=['GET'])
+def get_drone_station_mapping_by_drone_id(id):
+    drone_station_mapping = DroneStationMappingController.get_drone_station_mapping_by_drone_id(id)
+    if drone_station_mapping:
+        return jsonify({'success':True,'data':drone_station_mapping}),200
+    else:
+        return jsonify({'success':False,'data':drone_station_mapping}),400
+
+@drone_station_mapping_routes.route('/update_drone_station_mapping',methods=['PUT'])
+def update_drone_station_mapping():
+    data = request.get_json()
+    drone_station_mapping = DroneStationMappingController.update_drone_station_mapping(data['drone_id'],data['station_id'])
+    if drone_station_mapping:
+        return jsonify({'success':True,'data':drone_station_mapping}),200
+    else:
+        return jsonify({'success':False,'data':drone_station_mapping}),400
+
+@drone_station_mapping_routes.route('/delete_drone_station_mapping/<int:id>',methods=['DELETE'])
+def delete_drone_station_mapping(id):
+    drone_station_mapping = DroneStationMappingController.delete_drone_station_mapping(id)
+    if drone_station_mapping:
+        return jsonify({'success':True,'data':drone_station_mapping}),200
+    else:
+        return jsonify({'success':False,'data':drone_station_mapping}),400
+

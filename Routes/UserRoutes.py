@@ -9,14 +9,10 @@ user_routes = Blueprint('user_routes', __name__)
 def insert_user():
     data = request.get_json()
     user = UserController.insert_user(data)
-    user_dict = {
-        "user_id": user.id,
-        "name": user.name,
-        "password": user.password,
-        "role": user.role,
-        "email": user.email
-    }
-    return jsonify({'success': 'Data inserted successfully','data':user_dict}),200
+    if user:
+        return jsonify({'success': True,'data':user}),200
+    else:
+        return jsonify({'success': False ,'data':user}),400
 
 @user_routes.route('/insert_admin',methods=['POST'])
 def insert_admin():
@@ -24,7 +20,44 @@ def insert_admin():
     admin = UserController.insert_admin(data)
     if admin:
         return jsonify({'success': True,'data':admin}),200
-    return jsonify({'success': False,'data':"This user already exists"}),400
+    else:
+        return jsonify({'success': False,'data':admin}),400
+
+@user_routes.route('/get_all_admins',methods=['GET'])
+def get_all_admins():
+    admins = UserController.get_all_admins()
+    if admins:
+        return jsonify({'success':True,'data':admins}),200
+    else:
+        return jsonify({'success':False,'data':admins}),400
+
+@user_routes.route('/get_admin_by_id/<int:id>',methods=['GET'])
+def get_admin_by_id(id):
+    admin = UserController.get_admin_by_id(id)
+    if admin:
+        return jsonify({'success':True,'data':admin}),200
+    else:
+        return jsonify({'success':False,'data':admin}),400
+
+@user_routes.route('/update_admin/<int:id>',methods=['PUT'])
+def update_admin(id):
+    data = request.get_json()
+    data['id'] = id
+    admin = UserController.update_admin(data)
+    if admin:
+        return jsonify({'success':True,'data':admin}),200
+    else:
+        return jsonify({'success':False,'data':admin}),400
+
+@user_routes.route('/delete_admin/<int:id>',methods=['DELETE'])
+def delete_admin(id):
+    admin = UserController.delete_admin(id)
+    if admin:
+        return jsonify({'success':True,'data':admin}),200
+    else:
+        return jsonify({'success':False,'data':admin}),400
+
+
 
 @user_routes.route('/insert_operator',methods=['POST'])
 def insert_operator():
@@ -33,23 +66,23 @@ def insert_operator():
     operator = UserController.insert_operator(data,op_image)
     if operator:
         return jsonify({'success':True,'data':operator}),200
-    return jsonify({'success':False,'data':"This user already exists"}),400
+    else:
+        return jsonify({'success':False,'data':operator}),400
 
-@user_routes.route('/upload_operator_profile_picture',methods=['POST'])
-def upload_operator_profile_picture():
-    # data = request.get_json()
-    UserController.upload_operator_profile_picture()
-    # return jsonify({'success':True,'data':image_path}),200
-    return {}
+
 @user_routes.route('/login',methods=['POST'])
 def login_user():
     data = request.get_json()
-    is_valid = UserController.login_user(data)
-    return {'success':is_valid}
+    user = UserController.login_user(data)
+    if user:
+        return jsonify({'success':True,'data':user}),200
+    else:
+        return jsonify({'success':False,'data':user}),400
 
-@user_routes.route('/update_operator',methods=['PUT'])
-def update_operator():
+@user_routes.route('/update_operator/<int:id>',methods=['PUT'])
+def update_operator(id):
     data = request.form.to_dict()
+    data['id'] = id
     op_image = request.files.get('image')
     operator = UserController.update_operator(data,op_image)
     if operator:
@@ -59,22 +92,28 @@ def update_operator():
 
 @user_routes.route('/delete_operator/<int:id>',methods=['DELETE'])
 def delete_operator(id):
-    isDeleted = UserController.delete_operator(id)
-    return jsonify({'success':isDeleted})
+    operator = UserController.delete_operator(id)
+    if operator:
+        return jsonify({'success':True,'operator':operator}),200
+    else:
+        return jsonify({'success':False,'operator':operator}),400
+
 
 @user_routes.route('/get_all_operators',methods=['GET'])
 def get_all_operators():
     operators = UserController.get_all_operators()
     if operators:
         return jsonify({'success':True,'data':operators}),200
-    return jsonify({'success':False,'data':operators}),400
+    else:
+        return jsonify({'success':False,'data':operators}),400
 
 @user_routes.route('/get_operator_by_id/<int:id>',methods=['GET'])
 def get_operator_by_id(id):
     operator = UserController.get_operator_by_id(id)
     if operator:
         return jsonify({'success':True,'data':operator}),200
-    return jsonify({'success':False,'data':operator}),400
+    else:
+        return jsonify({'success':False,'data':operator}),400
 
 @user_routes.route('/uploads/operators/profile_pictures/<filename>')
 def serve_profile_picture(filename):

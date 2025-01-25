@@ -7,13 +7,41 @@ sortie_routes = Blueprint('sortie_routes',__name__)
 def insert_sortie():
     data = request.get_json()
     sortie = SortieController.insert_sortie(data)
-    sortie_dict ={
-        "id":sortie.id,
-        "mission_planner_id":sortie.mission_planner_id,
-        "start_date":sortie.start_date,
-        "start_time":str(sortie.start_time),
-        "end_date":sortie.end_date,
-        "end_time":str(sortie.end_time),
-        "duration":sortie.duration
-    }
-    return jsonify({'success':True,'data':sortie_dict}),200
+    if sortie:
+        return jsonify({'success':True,'data':sortie}),200
+    else:
+        return jsonify({'success':False,'data':{}}),400
+
+@sortie_routes.route('/get_all_sorties',methods=['GET'])
+def get_all_sorties():
+    sorties = SortieController.get_all_sorties()
+    if sorties:
+        return jsonify({'success':True,'data':sorties}),200
+    else:
+        return jsonify({'success':False,'data':sorties}),400
+
+@sortie_routes.route('/get_sortie_by_id/<int:id>',methods=['GET'])
+def get_sortie_by_id(id):
+    sortie = SortieController.get_sortie_by_id(id)
+    if sortie:
+        return jsonify({'success':True,'data':sortie}),200
+    else:
+        return jsonify({'success':False,'data':sortie},400)
+
+@sortie_routes.route('/update_sortie/<int:id>',methods=['PUT'])
+def update_sortie(id):
+    data = request.get_json()
+    data['id'] = id
+    sortie = SortieController.update_sortie(data)
+    if sortie:
+        return jsonify({'success':True,'data':sortie}),200
+    else:
+        return jsonify({'success':False,'data':{}}),400
+
+@sortie_routes.route('/delete_sortie/<int:id>',methods=['DELETE'])
+def delete_sortie(id):
+    sortie = SortieController.delete_sortie(id)
+    if sortie:
+        return jsonify({'success':True,'data':sortie}),200
+    else:
+        return jsonify({'success':False,'data':{}}),400
