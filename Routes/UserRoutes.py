@@ -39,19 +39,19 @@ def get_admin_by_id(id):
     else:
         return jsonify({'success':False,'data':admin}),400
 
-@user_routes.route('/update_admin/<int:id>',methods=['PUT'])
-def update_admin(id):
+@user_routes.route('/update_admin_by_id/<int:id>',methods=['PUT'])
+def update_admin_by_id(id):
     data = request.get_json()
     data['id'] = id
-    admin = UserController.update_admin(data)
+    admin = UserController.update_admin_by_id(data)
     if admin:
         return jsonify({'success':True,'data':admin}),200
     else:
         return jsonify({'success':False,'data':admin}),400
 
-@user_routes.route('/delete_admin/<int:id>',methods=['DELETE'])
+@user_routes.route('/delete_admin_by_id/<int:id>',methods=['DELETE'])
 def delete_admin(id):
-    admin = UserController.delete_admin(id)
+    admin = UserController.delete_admin_by_id(id)
     if admin:
         return jsonify({'success':True,'data':admin}),200
     else:

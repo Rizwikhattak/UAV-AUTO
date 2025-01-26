@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 # from flask_bcrypt import Bcrypt
 class UserController:
+    #Helper Function
     @staticmethod
     def insert_user(data):
         try:
@@ -14,7 +15,7 @@ class UserController:
             db.session.add(user)
             db.session.commit()
             return {
-                "user_id": user.id,
+                "id": user.id,
                 "name": user.name,
                 "password": user.password,
                 "role": user.role,
@@ -37,7 +38,7 @@ class UserController:
                     "name": user.get('name'),
                     "role": user.get('role'),
                     "email": user.get('email'),
-                    "admin_id": admin.id,
+                    "id": admin.id,
                     "age": admin.age,
                     "gender": admin.gender,
                     "phone_no": admin.phone_no
@@ -49,10 +50,10 @@ class UserController:
             return {}
 
     @staticmethod
-    def update_admin(data):
+    def update_admin_by_id(data):
         try:
-            user = User.query.filter_by(id=data.get('user_id'), validity=1).first()
             admin = Admin.query.filter_by(id=data.get('id'), validity=1).first()
+            user = User.query.filter_by(id=admin.user_id, validity=1).first()
             if user and admin:
                 user.name = data.get('name', user.name)
                 user.email = data.get('email', user.email)
@@ -65,7 +66,6 @@ class UserController:
                 return {
                     "user_id": user.id,
                     "name": user.name,
-                    "password": user.password,
                     "role": user.role,
                     "email": user.email,
                     "admin_id": admin.id,
@@ -80,21 +80,20 @@ class UserController:
             return {}
 
     @staticmethod
-    def delete_admin(admin_id):
+    def delete_admin_by_id(admin_id):
         try:
             admin = Admin.query.filter_by(id=admin_id, validity=1).first()
             user = User.query.filter_by(id=admin.user_id, validity=1).first()
-            if admin & user:
+            if admin and user:
                 admin.validity = 0
                 user.validity = 0
                 db.session.commit()
                 return {
                     "user_id": user.id,
                     "name": user.name,
-                    "password": user.password,
                     "role": user.role,
                     "email": user.email,
-                    "admin_id": admin.id,
+                    "id": admin.id,
                     "age": admin.age,
                     "gender": admin.gender,
                     "phone_no": admin.phone_no
@@ -116,10 +115,9 @@ class UserController:
                 return [{
                     "user_id": user.id,
                     "name": user.name,
-                    "password": user.password,
                     "role": user.role,
                     "email": user.email,
-                    "admin_id": admin.id,
+                    "id": admin.id,
                     "age": admin.age,
                     "gender": admin.gender,
                     "phone_no": admin.phone_no
@@ -141,10 +139,9 @@ class UserController:
                 return {
                     "user_id": user.id,
                     "name": user.name,
-                    "password": user.password,
                     "role": user.role,
                     "email": user.email,
-                    "admin_id": admin.id,
+                    "id": admin.id,
                     "age": admin.age,
                     "gender": admin.gender,
                     "phone_no": admin.phone_no
@@ -187,7 +184,13 @@ class UserController:
                     image_path = UserController.upload_operator_profile_picture(op_id,op_image)
                     operator.image_path = image_path
                     db.session.commit()
-                return {"user_id": user.get('id'), "name": user.get('name'),"role": user.get('role'),"email": user.get('email'),"id": operator.id,"image_path": operator.image_path}
+                return {"user_id": user.get('id'),
+                        "name": user.get('name'),
+                        "role": user.get('role'),
+                        "email": user.get('email'),
+                        "id": operator.id,
+                        "image_path": operator.image_path
+                        }
             else:
                 return {}
         except Exception as e:

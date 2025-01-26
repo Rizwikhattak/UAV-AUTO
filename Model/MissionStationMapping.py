@@ -8,3 +8,7 @@ class MissionStationMapping(db.Model):
     landing_station_id = db.Column(db.Integer, db.ForeignKey("Station.id"), nullable=False)
     departure_station_id = db.Column(db.Integer, db.ForeignKey("Station.id"), nullable=False)
     validity = db.Column(db.Integer, nullable=False, default=1)
+
+    missionPlanner = db.relationship('MissionPlanner', back_populates='missionStationMapping')
+    landingStation = db.relationship('Station', back_populates='landingStationMappings', foreign_keys=[landing_station_id])
+    departureStation = db.relationship('Station', back_populates='departureStationMappings', foreign_keys=[departure_station_id])
