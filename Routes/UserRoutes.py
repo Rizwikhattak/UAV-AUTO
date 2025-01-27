@@ -58,6 +58,14 @@ def delete_admin(id):
         return jsonify({'success':False,'data':admin}),400
 
 
+@user_routes.route('/login_user',methods=['POST'])
+def login_user():
+    data = request.get_json()
+    user = UserController.login_user(data)
+    if user:
+        return jsonify({'success':True,'data':user}),200
+    else:
+        return jsonify({'success':False,'data':user}),400
 
 @user_routes.route('/insert_operator',methods=['POST'])
 def insert_operator():
@@ -70,16 +78,9 @@ def insert_operator():
         return jsonify({'success':False,'data':operator}),400
 
 
-@user_routes.route('/login',methods=['POST'])
-def login_user():
-    data = request.get_json()
-    user = UserController.login_user(data)
-    if user:
-        return jsonify({'success':True,'data':user}),200
-    else:
-        return jsonify({'success':False,'data':user}),400
 
-@user_routes.route('/update_operator/<int:id>',methods=['PUT'])
+
+@user_routes.route('/update_operator_by_id/<int:id>',methods=['PUT'])
 def update_operator(id):
     data = request.form.to_dict()
     data['id'] = id
@@ -90,9 +91,9 @@ def update_operator(id):
     else:
         return jsonify({'success':False,'data':operator}),400
 
-@user_routes.route('/delete_operator/<int:id>',methods=['DELETE'])
-def delete_operator(id):
-    operator = UserController.delete_operator(id)
+@user_routes.route('/delete_operator_by_id/<int:id>',methods=['DELETE'])
+def delete_operator_by_id(id):
+    operator = UserController.delete_operator_by_id(id)
     if operator:
         return jsonify({'success':True,'operator':operator}),200
     else:

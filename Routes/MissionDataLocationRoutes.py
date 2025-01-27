@@ -20,27 +20,27 @@ def get_mission_data_location_by_id(id):
     else:
         return jsonify({'success':False,'data':mission_data_location}),400
 
-@mission_data_location_routes.route('/get_all_mission_data_location',methods=['GET'])
-def get_all_mission_data_location():
-    mission_data_locations = MissionDataLocationController.get_all_mission_data_location()
+@mission_data_location_routes.route('/get_all_mission_data_locations',methods=['GET'])
+def get_all_mission_data_locations():
+    mission_data_locations = MissionDataLocationController.get_all_mission_data_locations()
     if mission_data_locations:
         return jsonify({'success':True,'data':mission_data_locations}),200
     else:
         return jsonify({'success':False,'data':mission_data_locations}),400
 
-@mission_data_location_routes.route('/update_mission_data_location/<int:id>',methods=['PUT'])
-def update_mission_data_location(id):
+@mission_data_location_routes.route('/update_mission_data_location_by_id/<int:id>',methods=['PUT'])
+def update_mission_data_location_by_id(id):
     data = request.get_json()
     data['id'] = id
-    mission_data_location = MissionDataLocationController.update_mission_data_location(data)
+    mission_data_location = MissionDataLocationController.update_mission_data_location_by_id(data)
     if mission_data_location:
         return jsonify({'success':True,'data':mission_data_location}),200
     else:
         return jsonify({'success':False,'data':mission_data_location}),400
 
-@mission_data_location_routes.route('/delete_mission_data_location/<int:id>',methods=['DELETE'])
-def delete_mission_data_location(id):
-    mission_data_location = MissionDataLocationController.delete_mission_data_location(id)
+@mission_data_location_routes.route('/delete_mission_data_location_by_id/<int:id>',methods=['DELETE'])
+def delete_mission_data_location_by_id(id):
+    mission_data_location = MissionDataLocationController.delete_mission_data_location_by_id(id)
     if mission_data_location:
         return jsonify({'success':True,'data':mission_data_location}),200
     else:

@@ -3,7 +3,6 @@ from Routes import user_routes,drone_routes,mission_planner_routes,mission_task_
 from Directories import create_all_directories
 
 create_all_directories()
-
 # app.register_blueprint(user_routes, url_prefix='/api')  # Optional: prefix all user routes with '/api'
 app.register_blueprint(user_routes)  # Optional: prefix all user routes with '/api'
 app.register_blueprint(drone_routes)

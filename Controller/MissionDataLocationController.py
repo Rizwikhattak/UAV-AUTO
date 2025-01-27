@@ -34,7 +34,7 @@ class MissionDataLocationController():
             return {}
 
     @staticmethod
-    def get_all_mission_data_location():
+    def get_all_mission_data_locations():
         try:
             mission_data_locations = MissionDataLocation.query.filter_by(validity=1).all()
             if mission_data_locations:
@@ -50,7 +50,7 @@ class MissionDataLocationController():
             return []
 
     @staticmethod
-    def update_mission_data_location(data):
+    def update_mission_data_location_by_id(data):
         try:
             mission_data_location = MissionDataLocation.query.filter_by(id=data['id'],validity=1).first()
             if mission_data_location:
@@ -71,7 +71,7 @@ class MissionDataLocationController():
             return {}
 
     @staticmethod
-    def delete_mission_data_location(id):
+    def delete_mission_data_location_by_id(id):
         try:
             mission_data_location = MissionDataLocation.query.filter_by(id=id,validity=1).first()
             if mission_data_location:

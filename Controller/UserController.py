@@ -26,6 +26,26 @@ class UserController:
             return {}
 
     @staticmethod
+    def login_user(data):
+        try:
+            email = data['email']
+            password = data['password']
+            user = User.query.filter_by(email=email,validity=1).first()
+            if user is not None:
+                print("user password", user.password)
+                print("password", password)
+                print("is valid", check_password_hash(user.password, password))
+                if check_password_hash(user.password, password):
+                    return {'name': user.name, 'email': user.email, 'id': user.id}
+                else:
+                    return {}
+            else:
+                return {}
+        except Exception as e:
+            print(e)
+            return {}
+
+    @staticmethod
     def insert_admin(data):
         try:
             user = UserController.insert_user(data)
@@ -158,15 +178,15 @@ class UserController:
         # op_image.filename  --> You can get the original filename like this
         file = ''
         for filename in os.listdir(app.config['OPERATOR_PROFILE_PICTURES_FOLDER']):
-            op_img_filename = op_image.filename.replace(" ", "_")
+            op_img_filename = op_image.filename.replace(" ", "")
             if filename == f"{op_id}_{op_img_filename}":
-                print(f'File {filename} already exists :',os.path.join(app.config['OPERATOR_PROFILE_PICTURES_FOLDER'],filename).replace(r"\\", "/"))
-                return os.path.join(app.config['OPERATOR_PROFILE_PICTURES_FOLDER'],filename).replace(r"\\", "/")
+                print(f'File {filename} already exists :',os.path.join(app.config['OPERATOR_PROFILE_PICTURES_FOLDER'],filename).replace("\\", "/"))
+                return os.path.join(app.config['OPERATOR_PROFILE_PICTURES_FOLDER'],filename).replace("\\", "/")
             if filename.split("_")[0] == str(op_id):
                 file = filename
         if file:
             os.remove(os.path.join(app.config['OPERATOR_PROFILE_PICTURES_FOLDER'],file))
-        image_path = os.path.join(app.config['OPERATOR_PROFILE_PICTURES_FOLDER'],f'{op_id}_{op_image.filename.replace(" ","_")}')
+        image_path = os.path.join(app.config['OPERATOR_PROFILE_PICTURES_FOLDER'],f'{op_id}_{op_image.filename.replace(" ","")}')
         op_image.save(image_path)
         print(image_path.replace("\\","/"))
         return image_path.replace("\\","/")
@@ -222,36 +242,16 @@ class UserController:
             return {}
 
     @staticmethod
-    def delete_operator(operator_id):
+    def delete_operator_by_id(operator_id):
         try:
             operator = Operator.query.filter_by(id=operator_id, validity=1).first()
             user = User.query.filter_by(id=operator.user_id, validity=1).first()
-            if operator & user:
+            if operator and user:
                 operator.validity = 0
                 user.validity = 0
                 db.session.commit()
                 return {'id': operator.id, 'name': user.name, 'email': user.email, 'user_id': user.id,
                         'image_path': operator.image_path}
-            else:
-                return {}
-        except Exception as e:
-            print(e)
-            return {}
-
-    @staticmethod
-    def login_user(data):
-        try:
-            email = data['email']
-            password = data['password']
-            user = User.query.filter_by(email=email).first()
-            if user is not None:
-                print("user password", user.password)
-                print("password", password)
-                print("is valid", check_password_hash(user.password, password))
-                if check_password_hash(user.password, password):
-                    return {'name': user.name, 'email': user.email, 'id': user.id}
-                else:
-                    return {}
             else:
                 return {}
         except Exception as e:

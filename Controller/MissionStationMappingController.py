@@ -19,7 +19,7 @@ class MissionStationMappingController():
             return {}
 
     @staticmethod
-    def get_mission_station_mapping():
+    def get_all_mission_station_mappings():
         try:
             mission_station_mappings = MissionStationMapping.query.filter_by(validity=1).all()
             if mission_station_mappings:
@@ -53,7 +53,7 @@ class MissionStationMappingController():
             return {}
 
     @staticmethod
-    def update_mission_station_mapping(data):
+    def update_mission_station_mapping_by_id(data):
         try:
             mission_station_mapping = MissionStationMapping.query.filter_by(id = data['id'], validity=1).first()
             if mission_station_mapping:
@@ -74,7 +74,7 @@ class MissionStationMappingController():
             return {}
 
     @staticmethod
-    def delete_mission_station_mapping(id):
+    def delete_mission_station_mapping_by_id(id):
         try:
             mission_station_mapping = MissionStationMapping.query.filter_by(id = id, validity=1).first()
             if mission_station_mapping:

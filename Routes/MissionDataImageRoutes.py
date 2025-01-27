@@ -12,11 +12,11 @@ def insert_mission_data_image():
     else:
         return jsonify({'success':False,'data':mission_data_image}),400
 
-@mission_data_image_routes.route('/update_mission_data_image/<int:id>',methods=['PUT'])
-def update_mission_data_image(id):
+@mission_data_image_routes.route('/update_mission_data_image_by_id/<int:id>',methods=['PUT'])
+def update_mission_data_image_by_id(id):
     data = request.get_json()
     data['id'] = id
-    mission_data_image = MissionDataImageController.update_mission_data_image(data)
+    mission_data_image = MissionDataImageController.update_mission_data_image_by_id(data)
     if mission_data_image:
         return jsonify({'success':True,'data':mission_data_image}),200
     else:
@@ -38,9 +38,9 @@ def get_mission_data_image_by_id(id):
     else:
         return jsonify({'success':False,'data':mission_data_image}),400
 
-@mission_data_image_routes.route('/delete_mission_data_image/<int:id>',methods=['DELETE'])
-def delete_mission_data_image(id):
-    mission_data_image = MissionDataImageController.delete_mission_data_image(id)
+@mission_data_image_routes.route('/delete_mission_data_image_by_id/<int:id>',methods=['DELETE'])
+def delete_mission_data_image_by_id(id):
+    mission_data_image = MissionDataImageController.delete_mission_data_image_by_id(id)
     if mission_data_image:
         return jsonify({'success':True,'data':mission_data_image}),200
     else:

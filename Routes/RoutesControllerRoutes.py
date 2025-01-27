@@ -28,9 +28,9 @@ def get_all_routes_with_location_pins():
     else:
         return jsonify({'success':False,'data':routes}),400
 
-@routes_controller_routes.route('/delete_route/<int:id>',methods=['DELETE'])
-def delete_route(id):
-    routes = RoutesController.delete_route(id)
+@routes_controller_routes.route('/delete_route_by_id/<int:id>',methods=['DELETE'])
+def delete_route_by_id(id):
+    routes = RoutesController.delete_route_by_id(id)
     if routes:
         return jsonify({'success':True,'data':routes}),200
     else:

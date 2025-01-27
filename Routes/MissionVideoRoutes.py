@@ -50,7 +50,7 @@ def delete_mission_video_by_id(id):
 
 @mission_video_routes.route('/update_mission_video_by_id/<int:id>',methods=['PUT'])
 def update_mission_video_by_id(id):
-    data = request.form.to_dict()
+    data = request.get_json()
     data['id'] = id
     mission_video = MissionVideoController.update_mission_video_by_id(data)
     if mission_video:

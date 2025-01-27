@@ -72,10 +72,10 @@ class RoutesController():
 
 
     @staticmethod
-    def delete_route(route_id):
+    def delete_route_by_id(route_id):
         try:
             route = Routes.query.filter_by(id=route_id, validity=1).first()
-            location_pins = LocationPin.query.filter_by(route_id=route_id).all()
+            location_pins = LocationPin.query.filter_by(route_id=route_id,validity=1).all()
             if route:
                 route.validity = 0
                 db.session.commit()

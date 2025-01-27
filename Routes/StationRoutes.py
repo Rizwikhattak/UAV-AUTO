@@ -29,7 +29,7 @@ def get_station_by_id(id):
         return jsonify({'success':False,'data':station}),400
 
 @station_routes.route('/update_station_by_id/<int:id>',methods=['PUT'])
-def update_station():
+def update_station_by_id(id):
     data = request.get_json()
     data['id'] = id
     station = StationController.update_station_by_id(data)

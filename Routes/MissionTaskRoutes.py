@@ -28,19 +28,19 @@ def get_mission_task_by_id(id):
     else:
         return {'success':False,'data':mission_task},400
 
-@mission_task_routes.route('/update_mission_task/<int:id>',methods=['PUT'])
-def update_mission_task(id):
+@mission_task_routes.route('/update_mission_task_by_id/<int:id>',methods=['PUT'])
+def update_mission_task_by_id(id):
     data = request.get_json()
     data['id'] = id
-    mission_task = MissionTaskController.update_mission_task(data)
+    mission_task = MissionTaskController.update_mission_task_by_id(data)
     if mission_task:
         return {'success':True,'data':mission_task},200
     else:
         return {'success':False,'data':mission_task},400
 
-@mission_task_routes.route('/delete_mission_task/<int:id>',methods=['DELETE'])
-def delete_mission_task(id):
-    mission_task = MissionTaskController.delete_mission_task(id)
+@mission_task_routes.route('/delete_mission_task_by_id/<int:id>',methods=['DELETE'])
+def delete_mission_task_by_id(id):
+    mission_task = MissionTaskController.delete_mission_task_by_id(id)
     if mission_task:
         return {'success':True,'data':mission_task},200
     else:

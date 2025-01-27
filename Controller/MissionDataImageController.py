@@ -16,12 +16,12 @@ class MissionDataImageController():
             return {}
 
     @staticmethod
-    def update_mission_data_image(data):
+    def update_mission_data_image_by_id(data):
         try:
-            mission_data_image = MissionDataImage.query.filter_by(id=data['id']).first()
+            mission_data_image = MissionDataImage.query.filter_by(id=data.get('id'),validity=1).first()
             if mission_data_image:
-                mission_data_image.mission_data_location_id = data['mission_data_location_id']
-                mission_data_image.image_path = data['image_path']
+                mission_data_image.mission_data_location_id = data.get('mission_data_location_id',mission_data_image.mission_data_location_id )
+                mission_data_image.image_path = data.get('image_path',mission_data_image.image_path)
                 db.session.commit()
                 return {'id':mission_data_image.id,
                         'mission_data_location_id':mission_data_image.mission_data_location_id,
@@ -61,7 +61,7 @@ class MissionDataImageController():
             return {}
 
     @staticmethod
-    def delete_mission_data_image(id):
+    def delete_mission_data_image_by_id(id):
         try:
             mission_data_image = MissionDataImage.query.filter_by(id=id).first()
             if mission_data_image:

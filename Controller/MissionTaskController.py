@@ -56,7 +56,7 @@ class MissionTaskController():
             return {}
 
     @staticmethod
-    def update_mission_task(data):
+    def update_mission_task_by_id(data):
         try:
             mission_task = MissionTask.query.filter_by(id=data.get('id'),validity=1).first()
             if mission_task:
@@ -77,7 +77,7 @@ class MissionTaskController():
             return {}
 
     @staticmethod
-    def delete_mission_task(id):
+    def delete_mission_task_by_id(id):
         try:
             mission_task = MissionTask.query.filter_by(id=id,validity=1).first()
             mission_planner = MissionPlanner.query.filter_by(id=mission_task.mission_planner_id, validity=1).first()

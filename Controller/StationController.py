@@ -8,7 +8,11 @@ class StationController():
             station = Station(name=data['name'],latitude=data['latitude'],longitude=data['longitude'])
             db.session.add(station)
             db.session.commit()
-            return {'id':station.id,'name':station.name,'latitude':station.latitude,'longitude':station.longitude,'num_drones':station.num_drones}
+            return {'id':station.id,
+                    'name':station.name,
+                    'latitude':station.latitude,
+                    'longitude':station.longitude,
+                    'num_drones':station.num_drones}
         except Exception as e:
             print(e)
             return {}

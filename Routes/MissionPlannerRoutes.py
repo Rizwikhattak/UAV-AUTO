@@ -12,11 +12,11 @@ def insert_mission_plan():
     else:
         return jsonify({"success":False,'data':mission_plan}),400
 
-@mission_planner_routes.route('/update_mission_plan/<int:id>',methods=['PUT'])
-def update_mission_plan(id):
+@mission_planner_routes.route('/update_mission_plan_by_id/<int:id>',methods=['PUT'])
+def update_mission_plan_by_id(id):
     data = request.get_json()
     data['id'] = id
-    mission_plan = MissionPlannerController.update_mission_plan(data)
+    mission_plan = MissionPlannerController.update_mission_plan_by_id(data)
     if mission_plan:
         return jsonify({'success':True,'data':mission_plan}),200
     else:
@@ -38,25 +38,25 @@ def get_mission_plan(id):
     else:
         return jsonify({'success':False,'data':mission_plan}),400
 
-@mission_planner_routes.route('/delete_mission_plan/<int:id>',methods=['DELETE'])
-def delete_mission_plan(id):
-    mission_plan = MissionPlannerController.delete_mission_plan(id)
+@mission_planner_routes.route('/delete_mission_plan_by_id/<int:id>',methods=['DELETE'])
+def delete_mission_plan_by_id(id):
+    mission_plan = MissionPlannerController.delete_mission_plan_by_id(id)
     if mission_plan:
         return jsonify({'success':True,'data':mission_plan}),200
     else:
         return jsonify({'success':False,'data':mission_plan}),400
 
-@mission_planner_routes.route('/get_history',methods=['GET'])
-def get_history():
-    mission_plan = MissionPlannerController.get_history()
+@mission_planner_routes.route('/get_all_history',methods=['GET'])
+def get_all_history():
+    mission_plan = MissionPlannerController.get_all_history()
     if mission_plan:
         return jsonify({'success':True,'data':mission_plan}),200
     else:
         return jsonify({'success':False,'data':mission_plan}),400
 
-@mission_planner_routes.route('/delete_history/<int:id>',methods=['DELETE'])
-def delete_history(id):
-    mission_plan = MissionPlannerController.delete_history(id)
+@mission_planner_routes.route('/delete_history_by_id/<int:id>',methods=['DELETE'])
+def delete_history_by_id(id):
+    mission_plan = MissionPlannerController.delete_history_by_id(id)
     if mission_plan:
         return jsonify({'success':True,'data':mission_plan}),200
     else:
@@ -65,7 +65,7 @@ def delete_history(id):
 @mission_planner_routes.route('/update_mission_status_from_active_to_completed/<int:id>',methods=['PUT'])
 def update_mission_status_from_active_to_completed(id):
     data = request.get_json()
-    data['id'] = id
+    data['mission_planner_id'] = id
     mission_plan = MissionPlannerController.update_mission_status_from_active_to_completed(data)
     if mission_plan:
         return jsonify({'success':True,'data':mission_plan}),200

@@ -28,3 +28,4 @@ def make_mission_dirs(data):
     predictions_folder = f"{model_results_folder}/{data['location_pin_id']}"
     os.makedirs(predictions_folder, exist_ok = True)
     return video_folder,predictions_folder
+

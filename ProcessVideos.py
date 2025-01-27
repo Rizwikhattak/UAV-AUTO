@@ -69,6 +69,8 @@ def extract_frames(data, output_folder, frames_per_second=5):
         nonlocal saved_frame_count
         chk = True
         temp = {}
+        mission_data_location = {}
+        print("selected_frames :",len(selected_frames))
         for i, frame in enumerate(selected_frames):
             plotted_image, class_label, isDamaged, confidence_score = process_single_image(frame)
             if isDamaged:
@@ -81,15 +83,15 @@ def extract_frames(data, output_folder, frames_per_second=5):
                 if chk:
                     # Save to the database
                     mission_data_location = MissionDataLocationController.insert_mission_data_location({'mission_video_id':data['mission_video_id'],'latitude':damage_lat,'longitude':damage_lon,'damage':class_label})
-                    chk = False
                     temp['mission_data_location_id'] = mission_data_location.get('id')
                     temp['latitude'] = mission_data_location.get('latitude')
                     temp['longitude'] = mission_data_location.get('longitude')
                     temp['damage'] = mission_data_location.get('damage')
                     temp['image_paths'] = []
+                    chk = False
                 # Save damaged frame
                 damaged_frame_file_path = os.path.join(
-                    output_folder, f"{mission_data_location.get('id')}_{class_label}_{confidence_score:.2f}.png"
+                    output_folder, f"{mission_data_location.get('id')}_{second}_{class_label}_{confidence_score:.2f}.png"
                 )
                 cv2.imwrite(damaged_frame_file_path, plotted_image)
                 damaged_frame_file_path = damaged_frame_file_path.replace("\\","/")
@@ -111,10 +113,11 @@ def extract_frames(data, output_folder, frames_per_second=5):
         if frame_second != current_second:
             # Process frames from the completed second
             if current_second_frames:
+                print("current second frames:",len(current_second_frames))
                 selected_frames = random.sample(
                     current_second_frames, min(frames_per_second, len(current_second_frames))
                 )
-                print("Selected Frames", selected_frames)
+                print("Selected Frames", len(selected_frames))
                 process_and_save(selected_frames, current_second)
 
             # Reset for the new second

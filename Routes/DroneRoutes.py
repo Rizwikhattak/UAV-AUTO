@@ -14,12 +14,12 @@ def insert_drone():
     else:
         return jsonify({'success':False,'data':drone}),400
 
-@drone_routes.route('/update_drone/<int:id>', methods=['PUT'])
-def update_drone(id):
+@drone_routes.route('/update_drone_by_id/<int:id>', methods=['PUT'])
+def update_drone_by_id(id):
     data = request.form.to_dict()
     data['id'] = id
     drone_img = request.files.get('image')
-    drone = DroneController.update_drone(data,drone_img)
+    drone = DroneController.update_drone_by_id(data, drone_img)
     if drone:
         return jsonify({'success':True,'data':drone}),200
     else:
@@ -41,9 +41,9 @@ def get_drone_by_id(id):
     else:
         return jsonify({'success': False, 'data': drone}),400
 
-@drone_routes.route('/delete_drone/<int:id>',methods=['DELETE'])
-def delete_drone(id):
-    drone = DroneController.delete_drone(id)
+@drone_routes.route('/delete_drone_by_id/<int:id>',methods=['DELETE'])
+def delete_drone_by_id(id):
+    drone = DroneController.delete_drone_by_id(id)
     if drone:
         return jsonify({'success':True,'data':drone}),200
     else:

@@ -8,13 +8,37 @@ class LocationPinController():
             location_pin = LocationPin(route_id = data['route_id'],latitude = data['latitude'],longitude = data['longitude'])
             db.session.add(location_pin)
             db.session.commit()
-            return {'id':location_pin.id,'route_id':location_pin.route_id,'latitude':location_pin.latitude,'longitude':location_pin.longitude}
+            return {'id':location_pin.id,
+                    'route_id':location_pin.route_id,
+                    'latitude':location_pin.latitude,
+                    'longitude':location_pin.longitude}
         except Exception as e:
             print(e)
             return {}
 
     @staticmethod
-    def get_location_pins():
+    def insert_location_pins_list(data):
+        try:
+            location_pins = []
+            for location_pin in data:
+                location_pin = LocationPin(route_id=location_pin['route_id'], latitude=location_pin['latitude'],
+                                           longitude=location_pin['longitude'])
+                db.session.add(location_pin)
+                db.session.commit()
+                location_pins.append({'id':location_pin.id,
+                    'route_id':location_pin.route_id,
+                    'latitude':location_pin.latitude,
+                    'longitude':location_pin.longitude})
+            if location_pins:
+                return location_pins
+            else:
+                return []
+        except Exception as e:
+            print(e)
+            return []
+
+    @staticmethod
+    def get_all_location_pins():
         try:
             location_pins = LocationPin.query.filter_by(validity=1).all()
             if location_pins:
@@ -38,7 +62,7 @@ class LocationPinController():
             return {}
 
     @staticmethod
-    def update_location_pin(data):
+    def update_location_pin_by_id(data):
         try:
             location_pin = LocationPin.query.filter_by(id=data.get('id'),validity=1).first()
             if location_pin:
@@ -53,7 +77,7 @@ class LocationPinController():
             return {}
 
     @staticmethod
-    def delete_location_pin(location_id):
+    def delete_location_pin_by_id(location_id):
         try:
             location_pin = LocationPin.query.filter_by(id=location_id,validity=1).first()
             if location_pin:

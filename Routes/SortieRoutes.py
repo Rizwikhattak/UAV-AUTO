@@ -28,19 +28,19 @@ def get_sortie_by_id(id):
     else:
         return jsonify({'success':False,'data':sortie},400)
 
-@sortie_routes.route('/update_sortie/<int:id>',methods=['PUT'])
-def update_sortie(id):
+@sortie_routes.route('/update_sortie_by_id/<int:id>',methods=['PUT'])
+def update_sortie_by_id(id):
     data = request.get_json()
     data['id'] = id
-    sortie = SortieController.update_sortie(data)
+    sortie = SortieController.update_sortie_by_id(data)
     if sortie:
         return jsonify({'success':True,'data':sortie}),200
     else:
         return jsonify({'success':False,'data':{}}),400
 
-@sortie_routes.route('/delete_sortie/<int:id>',methods=['DELETE'])
-def delete_sortie(id):
-    sortie = SortieController.delete_sortie(id)
+@sortie_routes.route('/delete_sortie_by_id/<int:id>',methods=['DELETE'])
+def delete_sortie_by_id(id):
+    sortie = SortieController.delete_sortie_by_id(id)
     if sortie:
         return jsonify({'success':True,'data':sortie}),200
     else:
